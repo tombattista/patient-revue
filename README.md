@@ -16,8 +16,8 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 ## Project Setup
 
-- Clone svue-module Node project to your local repos directory
-- Clone patient-revue Vue project to your local repos directory
+- Clone [svue-module Node project](https://github.com/tombattista/svue-module) to your local repos directory
+- Clone [patient-revue Vue project](https://github.com/tombattista/patient-revue) to your local repos directory
 
 ```sh
 npm install
