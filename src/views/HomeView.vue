@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import PatientReports from '../components/PatientReports/PatientReports.vue';
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <PatientReports />
   </main>
 </template>
+

@@ -1,0 +1,84 @@
+/* PatientReports-scoped styles */
+.page-wrapper {
+    left: 50%;
+    position: absolute;
+    top: 5rem;
+}
+
+.page-wrapper .content-wrapper {
+    margin-top: 1rem;
+    transform: translate(-50%, 0);
+}
+
+.reports-title {
+    align-items: center;
+    display: flex;
+    width: 36rem;
+}
+
+.reports-title .title-logo {
+    height: 2.8rem;
+    vertical-align: middle;
+    width: 10.6rem;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-left: 1rem;
+    margin-bottom: .35rem;
+}
+
+.reports-table-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* DataTable-scoped styles */
+
+:deep(.dt-table) {
+    border-collapse: collapse;
+}
+
+/* Set column widths */
+:deep(.dt-table) tr > td:nth-child(1) { min-width: 13rem; max-width: 13rem; width: 13rem }
+:deep(.dt-table) tr > td:nth-child(2) { min-width: 13rem; max-width: 13rem; width: 13rem }
+:deep(.dt-table) tr > td:nth-child(3) { min-width: 4em; max-width: 4rem; width: 4rem }
+:deep(.dt-table) tr > td:nth-child(4) { min-width: 40rem; max-width: 40rem; width: 40rem }
+
+/* Set header styles */
+:deep(.dt-table) th { 
+    color: var(--color-text);
+    font-weight: 700;
+    padding: .25rem 1rem;
+}
+:deep(.dt-table) > thead > tr { border-bottom: 1px solid var(--color-text) }
+:deep(.dt-table) > thead > tr > th:nth-child(1) { text-align: left }
+:deep(.dt-table) > thead > tr > th:nth-child(2) { text-align: center }
+:deep(.dt-table) > thead > tr > th:nth-child(4) { text-align: left }
+
+/* Set body styles */
+:deep(.dt-table) > tbody > tr:nth-child(even) { background-color: var(--vt-c-gray-mute) }
+
+:deep(.dt-table) td { 
+    padding: .25rem 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+:deep(.dt-table) td .alert-true {
+    color: red;
+    font-weight: bold;
+    display: block;
+}
+
+:deep(.dt-table) td .alert-false {
+    display: none;
+}
+
+:deep(.dt-table) > tbody > tr > td:nth-child(2) { text-align: right; }
+:deep(.dt-table) > tbody > tr > td:nth-child(3) { text-align: right; }
+:deep(.dt-table) > tbody > tr > td:nth-child(4) { text-overflow: ellipsis; }
+
+.flagged-term {
+    color: var(--vt-c-orange);
+  }
