@@ -27,7 +27,7 @@ npm install
 - Make sure the [PatientReportAPI](https://github.com/tombattista/PatientReportApi.git) project is running.
 - Follow the [README instructions](https://github.com/tombattista/svue-module/blob/main/README.md) for installing the svue-module project.
 - Build the solution
-  - Open Powershell terminal
+  - Open Visual Studio developer terminal
   - Navigate into project directory: .../repos/patient-revue
   - Build and run the api in developer mode
   ```
