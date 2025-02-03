@@ -13,20 +13,16 @@ export default class PatientReport {
     this._patientName = patientName;
     this._reportDate = reportDate;
     if (summary.length) {
-      this.setSummary(summary, alertTerms);
+      this._summary = summary;
+      this._alertFlagged = alertTerms.some(s => this._summary.toLocaleLowerCase().includes(s.toLowerCase()));
     }
   }
 
   // Get properties
   public get id(): string { return this._id; }
   public get patientName(): string { return this._patientName; }
-  public get reportDate(): string { return this._reportDate.toLocaleString(); }
+  public get reportDate(): Date { return this._reportDate; }
+  public get reportDateString(): string { return this._reportDate.toLocaleString(); }
   public get summary(): string { return this._summary; }
   public get hasAlert(): boolean { return this._alertFlagged; }
-
-  // Set properties
-  public setSummary(reportSummary: string, alertTerms: string[]) {
-    this._summary = reportSummary;
-    this._alertFlagged = alertTerms.some(s => this._summary.toLocaleLowerCase().includes(s.toLowerCase()));
-  }
 }

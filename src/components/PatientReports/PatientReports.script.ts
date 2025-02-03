@@ -3,7 +3,7 @@ import { defineComponent, ref } from 'vue';
 import DataTable from '../data-table.vue';
 import SearchBox from '../SearchBox/SearchBox.vue';
 import ModalDialog from '../ModalDialog/ModalDialog.vue';
-import type PatientReport from '@/models/PatientReport';
+import PatientReport from '@/models/PatientReport';
 import ReportService from '@/services/report-service';
 
 // Data table headers
@@ -42,9 +42,12 @@ export default defineComponent({
 
         // Get array of reports
         getReports().then((reports: PatientReport[]) => {
-          rptReportItems.value = reports;
+          rptReportItems.value.length = 0;
+          reports.forEach((rpt) => {
+            rptReportItems.value.push(new PatientReport(rpt.id, rpt.patientName, rpt.reportDate, rpt.summary, alertTerms));
+          });
           rptVisible.value = rptReportItems.value.length > 0;
-        });
+        })
       });
     }
 
