@@ -26,11 +26,15 @@ npm install
 ## Running the application
 - Make sure the [PatientReportAPI](https://github.com/tombattista/PatientReportApi.git) project is running.
 - Follow the [README instructions](https://github.com/tombattista/svue-module/blob/main/README.md) for installing the svue-module project.
-- In the terminal window for the patient-revue project, run the following, then open the indicated localhost url in the browser:
-```sh
-npm run dev
-```
-
+- Build the solution
+  - Open Powershell terminal
+  - Navigate into project directory: .../repos/patient-revue
+  - Build and run the api in developer mode
+  ```
+  cd patient-revue
+  npm run dev
+  ```
+- It should be running on port 3000
 
 ### Using svue
 
