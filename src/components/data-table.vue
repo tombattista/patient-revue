@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="entity in data" :key="`entity-${entity.id}`" class="dt-data-row" >
+      <tr v-for="(entity, j) in data" :key="`entity-${j}`" class="dt-data-row" >
         <td v-for="(header, i) in headers" :key="`${header}-${i}`" >
           <slot :name="`column${i}`" :entity="entity"></slot>
         </td>
