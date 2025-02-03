@@ -1,16 +1,18 @@
-//import axios from 'axios';
+import axios from 'axios';
 
 import PatientReport from "@/models/PatientReport";
 
-//const API_BASE_URL = 'https://your-api-endpoint.com';
+const API_BASE_URL = import.meta.env.VITE_API_ROOT;
 
 const ReportService = {
   async getReports(patientName: string = ''): Promise<PatientReport[]> {
     try {
-      //const response = await axios.get(`${API_BASE_URL}/data`);
-      //return response.data;
+      const apiRelativePath = (patientName && patientName.trim().length) ? "/patient" : "";
+      const apiUrl = `${API_BASE_URL}/PatientReport${apiRelativePath}/${patientName}`;
+      const response = await axios.get(apiUrl);
+      return response.data;
 
-      const alertTerms = await this.getAlertTerms();
+      /*const alertTerms = await this.getAlertTerms();
       const patientNameMatch = patientName.toLowerCase();
 
       const reports: PatientReport[] = [
@@ -34,7 +36,7 @@ const ReportService = {
       ];
       return patientName.length
         ? reports.filter(rpt => rpt.patientName.toLowerCase() == patientNameMatch)
-        : reports;
+        : reports;*/
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -42,15 +44,16 @@ const ReportService = {
     return [];
   },
 
-  async getAlertTerms() {
+  async getAlertTerms(): Promise<string[]> {
     try {
-      //const response = await axios.get(`${API_BASE_URL}/data`);
-      //return response.data;
+      const apiUrl = `${API_BASE_URL}/Alert`;
+      const response = await axios.get(apiUrl);
+      return response.data;
 
-      return [
+      /*return [
         'tachycardia',
         'arrhythmia'
-      ]
+      ]*/
 
     } catch (error) {
       console.error("Error fetching data:", error);
