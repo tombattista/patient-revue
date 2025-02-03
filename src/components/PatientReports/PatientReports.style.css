@@ -1,4 +1,4 @@
-/* PatientReports-scoped styles */
+/* PatientReports styles */
 .page-wrapper {
     left: 50%;
     position: absolute;
@@ -33,6 +33,15 @@ h1 {
     justify-content: center;
 }
 
+.search-wrapper {
+    display: flex;
+    height: 2rem;
+}
+
+.search-box {
+    height: 100%;
+}
+
 /* DataTable-scoped styles */
 
 :deep(.dt-table) {
@@ -54,6 +63,7 @@ h1 {
 :deep(.dt-table) > thead > tr { border-bottom: 1px solid var(--color-text) }
 :deep(.dt-table) > thead > tr > th:nth-child(1) { text-align: left }
 :deep(.dt-table) > thead > tr > th:nth-child(2) { text-align: center }
+:deep(.dt-table) > thead > tr > th:nth-child(3) { text-align: center }
 :deep(.dt-table) > thead > tr > th:nth-child(4) { text-align: left }
 
 /* Set body styles */
@@ -76,7 +86,7 @@ h1 {
 }
 
 :deep(.dt-table) > tbody > tr > td:nth-child(2) { text-align: right; }
-:deep(.dt-table) > tbody > tr > td:nth-child(3) { text-align: right; }
+:deep(.dt-table) > tbody > tr > td:nth-child(3) { text-align: center; }
 :deep(.dt-table) > tbody > tr > td:nth-child(4) { text-overflow: ellipsis; }
 
 .flagged-term {

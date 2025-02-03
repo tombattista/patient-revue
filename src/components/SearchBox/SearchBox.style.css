@@ -1,0 +1,37 @@
+/* SearchBox styles */
+.search-wrapper > form {
+    display: flex;
+    height: 100%;
+}
+
+.search-wrapper > form label {
+    margin: auto .25rem auto 0;
+    vertical-align: middle;
+}
+
+.search-wrapper > form input[type='text'] {
+    height: 1.6rem;
+    margin: auto 0;
+    padding: 0 .5rem;
+    width: 13rem;
+}
+
+.search-wrapper > form button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 1.6rem;
+    margin: auto 0 auto -.1rem;
+}
+
+.search-wrapper > form button.spaced-button {
+    margin-left: 1rem;
+}
+
+.search-wrapper > form p {
+    color: var(--color-text);
+    height: 1.6rem;
+    margin: auto 0 auto .5rem;
+}
+
+.error-message {
+    color: var(--color-text);
+}

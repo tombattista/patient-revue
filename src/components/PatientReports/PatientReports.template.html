@@ -1,11 +1,20 @@
+<!-- PatientReports component HTML -->
 <div class="page-wrapper">
     <div class="content-wrapper">
         <div class="reports-title">
             <img alt="Vue title" class="title-logo" src="@/assets/images/logo-vector.png" width="125" height="125" />
             <h1>Patient Reports</h1>
         </div>
-        <div class="reports-table-wrapper">
-            <data-table :headers="headers" :data="data">
+        <div class="search-wrapper">
+          <SearchBox class="search-box" 
+                     :label="`Filter by patient name`" 
+                     :message="searchMessage"
+                     :allowEmptyValue="true"
+                     :searchAllLabel="`See All Patients`"
+                     @onValueUpdated="searchReports"></SearchBox>
+        </div>
+        <div v-if="rptVisible" class="reports-table-wrapper">
+            <data-table :headers="dataTableHeaders" :data="rptReportItems">
               <template #column0="{ entity }">
                 {{ entity.patientName }}
               </template>
@@ -15,7 +24,7 @@
             </data-table>
         </div>
     </div>
-    <ModalDialog v-show="isModalVisible" @close="closeModal">
+    <ModalDialog v-show="modalVisible" @close="closeModal">
       <template v-slot:header>
         {{ modalTitle }}
       </template>

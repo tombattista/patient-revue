@@ -1,0 +1,11 @@
+<!-- SearchBox component HTML -->
+<div class="search-wrapper">
+    <form @submit.prevent="submitForm">
+        <label for="searchValue">{{ label }}</label>
+        <input type="text" id="searchValue" v-model="searchValue" required />
+        <button type="submit">&#9660;</button>
+        <button type="button" class="spaced-button" @click="loadAll">{{searchAllLabel}} &#9660;</button>
+        <p class="error-message">{{ searchMessage }}</p>
+    </form>
+</div>
+        

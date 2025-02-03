@@ -1,98 +1,125 @@
-import PatientReport from "@/models/PatientReport";
-import DataTable from "../data-table.vue";
-import ModalDialog from "../ModalDialog/ModalDialog.vue";
-import ReportService from "@/services/report-service";
-import { onMounted, ref } from "vue";
+/* PatientReports component script */
+import { defineComponent, ref } from 'vue';
+import DataTable from '../data-table.vue';
+import SearchBox from '../SearchBox/SearchBox.vue';
+import ModalDialog from '../ModalDialog/ModalDialog.vue';
+import type PatientReport from '@/models/PatientReport';
+import ReportService from '@/services/report-service';
 
-const alertTerms: string[] = [
-  'tachycardia',
-  'arrhythmia'
+// Data table headers
+const dtHeaders = [
+  'Patient',
+  'Date',
+  'Status',
+  'Summary'
 ];
 
-const reportItems = ref<PatientReport[]>([]);
-/*const reportItems: PatientReport[] = [
-  new PatientReport("1", "Tom Battista", new Date("12/26/2024"),
-    `Summary text 1...`,
-    alertTerms),
-  new PatientReport("2", "Tom Battista", new Date("12/01/2024"),
-    `Tachycardia is a medical condition characterized by an abnormally fast heart rate. It can be caused by various factors,
-    including stress, anxiety, or an underlying health condition. Symptoms may include dizziness, shortness of breath, and
-    fatigue. Treatment typically involves lifestyle changes, medications, or medical interventions to correct the heart rate.`,
-    alertTerms),
-  new PatientReport("3", "Tom Battista", new Date("11/18/2024"),
-    `Arrhythmia refers to an irregular heartbeat, which can manifest as a variation in the rhythm or rate of the heart's contractions.`,
-    alertTerms),
-    new PatientReport("4", "Tom Battista", new Date("10/18/2024"),
-      `Wherein the heart flutters eratically, therein shall arrhythmia be found.`,
-      alertTerms),
-];*/
-
-export default {
+export default defineComponent({
   components: {
     DataTable,
-    ModalDialog,
+    SearchBox,
+    ModalDialog
   },
-  setup() {
-    const isModalVisible = ref<boolean>(false);
+  props: ['title'],
+  data() {
+    // Data fields
+    const rptTitle = ref<string>(this.title);
+    const modalVisible = ref<boolean>(false);
     const modalTitle = ref<string>('');
     const modalMessage = ref<string>('');
+    const searchPatientName = ref<string>('');
+    const searchMessage = ref<string>('');
+    const rptVisible = ref<boolean>(false);
+    const rptAlertTerms = ref<string[]>([]);
+    const rptReportItems = ref<PatientReport[]>([]);
 
-    const getReports = async () => {
-      try {
-        reportItems.value = await ReportService.getReports();
-      } catch (error) {
-        // Handle error appropriately
-        console.error("Failed to fetch data", error)
-      }
+    // Public handler for report search action
+    const searchReports = (searchValue: string) => {
+      searchPatientName.value = searchValue;
+      // Get array of alert terms
+      getAlertTerms().then((alertTerms: string[]) => {
+        rptAlertTerms.value = alertTerms;
+
+        // Get array of reports
+        getReports().then((reports: PatientReport[]) => {
+          rptReportItems.value = reports;
+          rptVisible.value = rptReportItems.value.length > 0;
+        });
+      });
+    }
+
+    // Private method for async call to report service to get reports
+    const getReports = async (): Promise<PatientReport[]> => {
+      try { return await ReportService.getReports(searchPatientName.value); }
+      catch { searchMessage.value = "Error during search." }
+      return [];
     };
 
+    // Private method for async call to report service to get alert terms
+    const getAlertTerms = async (): Promise<string[]> => {
+      try { return await ReportService.getAlertTerms(); }
+      catch { searchMessage.value = "Error during search."; }
+      return [];
+    };
+
+    // Public method for displaying summary in modal dialog
     const showSummary = (id: string) => {
-      const selectedItem: PatientReport | undefined = reportItems.value.find((item) => item.id == id) as PatientReport;
+      const selectedItem: PatientReport | undefined = rptReportItems.value.find((item) => item.id == id) as PatientReport;
       if (selectedItem == undefined) { return; }
 
       modalTitle.value = `${selectedItem.patientName} (${selectedItem.reportDate})`;
       modalMessage.value = enhanceFlaggedTerms(selectedItem.summary);
-      isModalVisible.value = true;
+      modalVisible.value = true;
     };
 
+    // Public method to close the modal dialog
     const closeModal = () => {
-      isModalVisible.value = false;
+      modalVisible.value = false;
     }
 
+    // Private method to add formatting for words in summary that are included in "alert" terms.
     const enhanceFlaggedTerms = (text: string): string => {
       let enhancedText = text;
-      alertTerms.forEach(flaggedTerm => {
+
+      // Format words
+      rptAlertTerms.value.forEach(flaggedTerm => {
         const regex = new RegExp(flaggedTerm, 'gi');
         enhancedText = enhancedText.replace(regex, `<span style="color:var(--vt-c-orange)">${flaggedTerm}</span>`);
       });
+
+      // If newly formatted word is at beginning of paragraph, ensure it is capitalized.
       if (enhancedText.startsWith('<span')) {
         const n = enhancedText.indexOf('>') + 1;
         enhancedText = enhancedText.slice(0, n) + enhancedText.charAt(n).toUpperCase() + enhancedText.slice(n + 1)
       }
+
       return enhancedText;
     }
 
-    onMounted(() => {
-      getReports();
-    });
-
     return {
-      isModalVisible,
+      rptTitle,
+      modalVisible,
       modalTitle,
       modalMessage,
-      reportItems,
-      getReports,
+      searchPatientName,
+      searchMessage,
+      rptVisible,
+      rptReportItems,
+      searchReports,
       showSummary,
-      closeModal
+      closeModal,
+      dataTableHeaders: dtHeaders,
+      dataTableData: rptReportItems.value
+    };
+  },
+  watch: {
+    title(newTitleValue) {
+      this.rptTitle = newTitleValue;
     }
   },
-  data: () => ({
-    headers: [
-      'Patient',
-      'Date',
-      'Alert',
-      'Summary'
-    ],
-    data: reportItems,
-  }),
-}
+  methods: {
+    emitTitleUpdate() {
+      this.$emit('update-title', this.rptTitle);
+    }
+  }
+});

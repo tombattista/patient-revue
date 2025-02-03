@@ -5,14 +5,15 @@ import PatientReport from "@/models/PatientReport";
 //const API_BASE_URL = 'https://your-api-endpoint.com';
 
 const ReportService = {
-  async getReports() {
+  async getReports(patientName: string = ''): Promise<PatientReport[]> {
     try {
       //const response = await axios.get(`${API_BASE_URL}/data`);
       //return response.data;
 
       const alertTerms = await this.getAlertTerms();
+      const patientNameMatch = patientName.toLowerCase();
 
-      return [
+      const reports: PatientReport[] = [
         new PatientReport("1", "Tom Battista", new Date("12/26/2024"),
           `Summary text for 1...`,
           alertTerms),
@@ -27,12 +28,18 @@ const ReportService = {
           new PatientReport("4", "Tom Battista", new Date("10/18/2024"),
             `Wherein the heart flutters eratically, therein shall arrhythmia be found.`,
             alertTerms),
-      ]
+            new PatientReport("5", "Julie Battista", new Date("12/18/2024"),
+              `Too much glue on a 3x5 index card leads to tachycardia.`,
+              alertTerms),
+      ];
+      return patientName.length
+        ? reports.filter(rpt => rpt.patientName.toLowerCase() == patientNameMatch)
+        : reports;
 
     } catch (error) {
       console.error("Error fetching data:", error);
-      throw error;
     }
+    return [];
   },
 
   async getAlertTerms() {
@@ -47,20 +54,9 @@ const ReportService = {
 
     } catch (error) {
       console.error("Error fetching data:", error);
-      throw error;
     }
+    return [];
   },
-
-  /*async postData(payload) {
-      try {
-        const response = await axios.post(`${API_BASE_URL}/data`, payload);
-        return response.data;
-      } catch (error) {
-        console.error("Error posting data:", error);
-        throw error;
-      }
-  },*/
-  // Add more API functions as needed (e.g., put, delete)
 };
 
 export default ReportService;

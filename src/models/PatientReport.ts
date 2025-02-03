@@ -24,18 +24,9 @@ export default class PatientReport {
   public get summary(): string { return this._summary; }
   public get hasAlert(): boolean { return this._alertFlagged; }
 
-  public get json() {
-    return {
-      id: this.id,
-      patientName: this.patientName,
-      reportDate: this.reportDate,
-      summary: this.summary
-    };
-  }
-
   // Set properties
   public setSummary(reportSummary: string, alertTerms: string[]) {
     this._summary = reportSummary;
-    this._alertFlagged = alertTerms.some(s => this._summary.includes(s));
+    this._alertFlagged = alertTerms.some(s => this._summary.toLocaleLowerCase().includes(s.toLowerCase()));
   }
 }
