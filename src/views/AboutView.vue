@@ -8,7 +8,24 @@
       <hr />
       <div class="about-content-wrapper">
         <div class="about-content">
-          About...
+          <h2>Repositories</h2>
+          <dl>
+            <dt><a href="https://github.com/tombattista/PatientReportApi.git" title="PatientReportApi GitHub repository">PatientReportApi C# API</a></dt>
+            <dd>
+              "PatientReportApi" is a C# .NET 8 API which provides an interface to patient report data to the UI.
+              (<a href="https://github.com/tombattista/PatientReportApi/blob/main/README.md" title="PatientReportApi ReadMe">README</a>)
+            </dd>
+            <dt><a href="https://github.com/tombattista/patient-revue.git" title="patient-revue GitHub repository">patient-revue Vue application</a></dt>
+            <dd>
+              "patient-revue" is a Vue 3 application which displays patient report data either in a complete list or filtered by patient name.
+              (<a href="https://github.com/tombattista/patient-revue/blob/main/README.md" title="patient-revue ReadMe">README</a>)
+            </dd>
+            <dt><a href="https://github.com/tombattista/svue-module.git" title="svue-module GitHub repository">svue-module Node application</a></dt>
+            <dd>
+              "svue-module" is a Node.js application which extends the functionality of Vue such that a developer can easily add components, interfaces, and models to a Vue project.
+              (<a href="https://github.com/tombattista/svue-module/blob/main/README.md" title="svue-module ReadMe">README</a>)
+            </dd>
+          </dl>
         </div>
       </div>
     </div>
@@ -52,6 +69,20 @@ h1 {
 
 .about-content {
   display: block;
+  margin: 1rem;
   width: 100%;
+}
+
+dl > dt {
+  background-color: var(--vt-c-gray-mute);
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: .25rem;
+  padding: .25rem .5rem;
+}
+
+dl > dd {
+  background-color: var(--vt-c-gray-mute);
+  padding: 0 1rem;
 }
 </style>
